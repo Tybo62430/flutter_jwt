@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jwt/providers/auth_provider.dart';
+import 'package:flutter_jwt/providers/user_provider.dart';
 import 'package:flutter_jwt/views/auth/signin_view.dart';
 import 'package:flutter_jwt/views/auth/signup_view.dart';
 import 'package:flutter_jwt/views/home_view.dart';
@@ -20,10 +21,14 @@ class MyAuth extends StatefulWidget {
 
 class _MyAuthState extends State<MyAuth> {
   final AuthProvider authProvider = AuthProvider();
+  final UserProvider userProvider = UserProvider();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: authProvider)],
+      providers: [
+        ChangeNotifierProvider.value(value: authProvider),
+        ChangeNotifierProvider.value(value: userProvider),
+      ],
       child: MaterialApp(
         title: 'my auth',
         theme: ThemeData(
