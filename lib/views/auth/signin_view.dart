@@ -3,7 +3,6 @@ import 'package:flutter_jwt/models/signin_form_model.dart';
 import 'package:flutter_jwt/models/user_model.dart';
 import 'package:flutter_jwt/providers/auth_provider.dart';
 import 'package:flutter_jwt/providers/user_provider.dart';
-import 'package:flutter_jwt/views/profile_view.dart';
 import 'package:provider/provider.dart';
 
 class SigninView extends StatefulWidget {
@@ -17,7 +16,6 @@ class SigninView extends StatefulWidget {
 class _SigninViewState extends State<SigninView> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   late SigninForm signinForm;
-  bool _gender = false;
 
   FormState get form => key.currentState!;
 
@@ -30,12 +28,11 @@ class _SigninViewState extends State<SigninView> {
   Future<void> submitForm() async {
     if (form.validate()) {
       form.save();
-      final String token =
-          await Provider.of<AuthProvider>(context, listen: false)
-              .signin(signinForm);
-      // Provider.of<UserProvider>(context, listen: false).UpdateUser(user);
+      final User user = await Provider.of<AuthProvider>(context, listen: false)
+          .signin(signinForm);
+      Provider.of<UserProvider>(context, listen: false).UpdateUser(user);
+
       // Navigator.pushNamed(context, ProfileView.routeName);
-      print(token);
     } else {
       print("Error");
     }

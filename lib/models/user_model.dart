@@ -29,11 +29,11 @@ class User {
         status = "inscription";
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json['_id'],
-        email = json['email'],
+      : id = json['id'].toString(),
+        email = json['username'],
         nom = json['nom'],
         prenom = json['prenom'],
-        dateDeNaissance = json['dateDeNaissance'],
+        dateDeNaissance = DateTime.parse(json['dateNaissance']),
         telephone = json['telephone'],
         sexe = json['sexe'],
         cgu = json['cgu'],
