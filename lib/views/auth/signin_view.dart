@@ -3,6 +3,8 @@ import 'package:flutter_jwt/models/signin_form_model.dart';
 import 'package:flutter_jwt/models/user_model.dart';
 import 'package:flutter_jwt/providers/auth_provider.dart';
 import 'package:flutter_jwt/providers/user_provider.dart';
+import 'package:flutter_jwt/views/profile_view.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
 class SigninView extends StatefulWidget {
@@ -28,11 +30,19 @@ class _SigninViewState extends State<SigninView> {
   Future<void> submitForm() async {
     if (form.validate()) {
       form.save();
-      final User user = await Provider.of<AuthProvider>(context, listen: false)
+      final token = await Provider.of<AuthProvider>(context, listen: false)
           .signin(signinForm);
-      Provider.of<UserProvider>(context, listen: false).UpdateUser(user);
 
-      // Navigator.pushNamed(context, ProfileView.routeName);
+      if (token != null) {
+        // User user = await Provider.of<UserProvider>(context, listen: false)
+        //     .getCurrentUser(token);
+        User user = await Provider.of<UserProvider>(context, listen: false)
+            .getCurrentUser(token);
+        Provider.of<UserProvider>(context, listen: false).UpdateUser(user);
+        Navigator.pushNamed(context, ProfileView.routeName);
+      } else {
+        print("Pas token");
+      }
     } else {
       print("Error");
     }

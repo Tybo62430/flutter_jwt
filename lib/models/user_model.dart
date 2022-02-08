@@ -1,5 +1,5 @@
 class User {
-  String id;
+  int id;
   String email;
   String nom;
   String prenom;
@@ -24,13 +24,13 @@ class User {
     required this.adresse,
     required this.codePostal,
     required this.ville,
-  })  : id = "",
+  })  : id = 0,
         isVerified = false,
         status = "inscription";
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json['id'].toString(),
-        email = json['username'],
+      : id = json['id'],
+        email = json['email'],
         nom = json['nom'],
         prenom = json['prenom'],
         dateDeNaissance = DateTime.parse(json['dateNaissance']),
